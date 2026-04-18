@@ -1,12 +1,23 @@
-# Stitch
+# Stitch — AI Session Context Manager for Claude, Codex, ChatGPT & Any LLM
 
 [![PyPI version](https://img.shields.io/pypi/v/stitch-ctx)](https://pypi.org/project/stitch-ctx/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/stitch-ctx)](https://pypi.org/project/stitch-ctx/)
 [![Python](https://img.shields.io/pypi/pyversions/stitch-ctx)](https://pypi.org/project/stitch-ctx/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**AI session context manager** — saves your progress so the next AI session picks up exactly where you left off.
+**Save and restore AI coding session progress** — so your next Claude Code, Codex, ChatGPT, Cursor, Copilot, or Windsurf session picks up exactly where you left off. No lost context, no wasted tokens, no repeated work.
 
-> Your AI session expires. You start a new one. The AI has zero memory — it re-reads your entire project, wastes tokens, loses decisions, and might redo work you already finished. Stitch fixes that.
+> Your AI coding session expires. You start a new one. The AI has zero memory — it re-reads your entire project, wastes tokens, loses decisions, and might redo work you already finished. **Stitch fixes that.**
+
+## The Problem: AI Coding Assistants Forget Everything
+
+Every time your AI coding session expires or you switch between AI tools, you lose:
+- **Task progress** — the AI redoes finished work
+- **Architecture decisions** — the AI second-guesses choices you already made
+- **Failed approaches** — the AI retries things you know don't work
+- **Token budget** — the AI wastes tokens re-exploring your codebase
+
+Stitch captures the **soft knowledge** that lives in your AI session but not in your code — and generates a compact markdown file any AI model reads on startup.
 
 ## How It Works
 
@@ -18,8 +29,6 @@ Session 1 (expires)              Session 2 (new)
 └── Next: password reset         │    Using JWT (not sessions). Skip bcrypt."
                                  └── Continues from password reset ✓
 ```
-
-Stitch captures the **soft knowledge** that lives in your AI session but not in your code — task progress, plans, architectural decisions, and failed approaches. It generates a single compact markdown file that any AI model reads on startup.
 
 ## Installation
 
@@ -217,6 +226,34 @@ your-project/
 └── .codex/
     └── instructions.md         # Codex hook (appended, not overwritten)
 ```
+
+## Why Stitch?
+
+| Without Stitch | With Stitch |
+|---|---|
+| AI forgets everything between sessions | AI resumes exactly where you left off |
+| Wastes tokens re-reading your project | Compact context file saves token budget |
+| Retries failed approaches | Dead ends are recorded and avoided |
+| Second-guesses your architecture | Decisions are preserved with reasoning |
+| Different behavior across AI tools | Same context file works with every LLM |
+
+## FAQ
+
+### Does Stitch work with Cursor, Copilot, or Windsurf?
+
+Yes. Stitch generates a plain markdown context file (`.stitch/context.md`) that any AI coding assistant can read. For tools that support custom instructions, point them to this file.
+
+### How is this different from CLAUDE.md or .cursorrules?
+
+Those files store static project rules. Stitch tracks **dynamic session state** — what you've done, what's next, what failed, and what decisions you made. They complement each other.
+
+### Does Stitch send data to any server?
+
+No. Stitch is 100% local. All data stays in your `.stitch/` directory. Nothing is sent anywhere.
+
+### How much context does it use?
+
+The generated `context.md` is typically 50-200 lines — a fraction of what the AI would spend re-exploring your project manually.
 
 ## Contributing
 
