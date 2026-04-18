@@ -1,0 +1,68 @@
+name: Test
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Verify CLI
+        run: stitch --version
+
+      - name: Test init
+        run: |
+          mkdir test-project
+          cd test-project
+          stitch init --name "TestApp" --stack "python"
+          stitch status
+
+      - name: Test batch update
+        run: |
+          cd test-project
+          stitch update -t "test task" -p "step 1 done" -d "choice A::reason" -x "bad idea::didn't work"
+          stitch update --plan "2 steps" --plan-steps "first" --plan-steps "second"
+          stitch update -s "first::done" -s "second::in-progress"
+          stitch status
+
+      - name: Test save and resume
+        run: |
+          cd test-project
+          stitch save -m "ending session"
+          stitch resume
+          stitch history
+
+      - name: Test file scanning
+        run: |
+          cd test-project
+          stitch files
+          stitch file src/app.py "main entry point"
+
+      - name: Verify context.md exists
+        run: |
+          cd test-project
+          cat .stitch/context.md
+
+      - name: Verify hooks created
+        run: |
+          cd test-project
+          cat CLAUDE.md
+          cat .codex/instructions.md

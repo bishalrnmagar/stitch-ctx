@@ -218,14 +218,6 @@ your-project/
     └── instructions.md         # Codex hook (appended, not overwritten)
 ```
 
-## Renaming
-
-The name "stitch" is stored in a single file. To rename:
-
-1. Change `APP_NAME` and `APP_DIR` in `stitch/__init__.py`
-2. Update `[project.scripts]` in `pyproject.toml`
-3. Rename the `stitch/` directory
-
 ## Contributing
 
 Contributions are welcome. Please [open an issue](https://github.com/bishalrnmagar/stitch-ctx/issues) first to discuss what you'd like to change.
