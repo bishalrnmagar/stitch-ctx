@@ -1,0 +1,35 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  ai-review:
+    name: AI Code Review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Claude Code Review
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: claude-sonnet-4-20250514
+
+          direct_prompt: |
+            Review this PR for:
+            1. Security issues (path traversal in file operations, injection via CLI args)
+            2. File I/O safety (encoding, race conditions on JSON read/write)
+            3. CLI correctness (Click argument parsing, edge cases in batch update)
+            4. Context generation accuracy (does context.md reflect actual session state?)
+            5. Hook safety (appending to existing CLAUDE.md / .codex without corruption)
+
+            Context: This is stitch-ctx, a Python CLI tool that saves AI session context
+            (progress, plans, decisions) as JSON and generates a markdown summary for
+            AI models to read on session start. Uses Click for CLI, flat JSON files for storage.
+            Focus on what matters — skip style nitpicks.
