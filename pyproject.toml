@@ -5,11 +5,16 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "stitch-ctx"
 version = "0.1.0"
-description = "AI session context manager — saves progress so your next AI session picks up where you left off"
+description = "AI session context manager — save and restore AI coding session progress across Claude, Codex, ChatGPT and any LLM"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
-keywords = ["ai", "context", "session", "cli", "claude", "codex", "chatgpt", "llm", "developer-tools"]
+keywords = [
+    "ai", "context", "session", "cli", "claude", "codex", "chatgpt", "llm",
+    "developer-tools", "ai-coding", "session-management", "context-window",
+    "ai-memory", "coding-assistant", "prompt-engineering", "ai-workflow",
+    "cursor", "copilot", "windsurf", "aider", "continuation", "token-saving",
+]
 authors = [
     { name = "Bishal Rana Magar", email = "bishalmagr70@gmail.com" },
 ]
@@ -22,7 +27,13 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Utilities",
     "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
 ]
 dependencies = [
     "click>=8.0",
@@ -31,7 +42,9 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/bishalrnmagar/stitch-ctx"
 Repository = "https://github.com/bishalrnmagar/stitch-ctx"
+Documentation = "https://github.com/bishalrnmagar/stitch-ctx#readme"
 Issues = "https://github.com/bishalrnmagar/stitch-ctx/issues"
+Changelog = "https://github.com/bishalrnmagar/stitch-ctx/releases"
 
 [project.scripts]
 stitch = "stitch.cli:main"
