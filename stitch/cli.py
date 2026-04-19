@@ -38,6 +38,7 @@ def init(name, stack):
     from stitch.session import create_session
     from stitch.detect import detect_project_name, detect_tech_stack
     from stitch.file_map import save_file_map
+    from stitch.context import save_context
 
     if is_initialized():
         click.echo(f"{APP_NAME} is already initialized in this project.")
@@ -65,6 +66,7 @@ def init(name, stack):
 
     file_map = save_file_map(project_dir)
     file_count = len(file_map.get("files", {}))
+    save_context()
 
     click.echo(f"Initialized {APP_NAME} for '{project_name}'")
     if tech_stack:
